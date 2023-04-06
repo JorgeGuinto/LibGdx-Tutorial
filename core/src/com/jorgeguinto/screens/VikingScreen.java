@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.jorgeguinto.characters.Plane;
+import com.jorgeguinto.inputs.InputPlaneKeyboard;
 import com.jorgeguinto.MyGdxGame;
+import com.jorgeguinto.VirtualController;
 
 public class VikingScreen extends Pantalla {
 
@@ -15,11 +18,14 @@ public class VikingScreen extends Pantalla {
     public static final int WIDTH = 849;
 
     // == Fields ==
+    private Plane vik;
     private Texture viking;
     private TextureRegion vikingRegion;
     private TextureRegion[] vikingFrames;
     private Animation vikingAnimation;
     private float duration = 0;
+    private VirtualController controller;
+    private InputPlaneKeyboard input;
 
     // == Constructor ==
     public VikingScreen(MyGdxGame game) {
@@ -30,6 +36,12 @@ public class VikingScreen extends Pantalla {
 
     @Override
     public void show() {
+
+        controller = new VirtualController();
+        input = new InputPlaneKeyboard(controller);
+
+        Gdx.input.setInputProcessor(input);
+
         viking = new Texture("viking.jpg");
         vikingRegion = new TextureRegion(viking, WIDTH, HEIGHT);
         TextureRegion[][] temp = vikingRegion.split(WIDTH/5, HEIGHT/2);
